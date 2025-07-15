@@ -54,3 +54,18 @@ docker-compose up
 - [X] Group the same websites by perceptual hashing and nilsimsa hashing.
 - [X] Callback function for other tools
 - [ ] Truncate old data
+
+## Building
+
+To build the web interface and CLI binary on Kali Linux:
+
+```bash
+cd web
+npm install
+npm run build
+cd ..
+go build ./...
+```
+
+The frontend files are ignored from version control, so running the above steps
+before `go build` ensures `web/dist` exists for Go's embed directives.

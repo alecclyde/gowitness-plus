@@ -1,6 +1,8 @@
 module github.com/sensepost/gowitness
 
-go 1.19
+go 1.24
+
+toolchain go1.24.3
 
 require (
 	github.com/chikamim/nilsimsa v0.0.0-20200618014539-84540bbf06dd
