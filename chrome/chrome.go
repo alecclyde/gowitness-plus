@@ -1,15 +1,16 @@
 package chrome
 
 import (
-	"context"
-	"crypto/tls"
-	"encoding/base64"
-	"errors"
-	"io"
-	"net/http"
-	"net/url"
-	"strings"
-	"time"
+        "context"
+        "crypto/tls"
+        "encoding/base64"
+        "errors"
+        "io"
+        "net/http"
+        "net/url"
+        "os"
+        "strings"
+        "time"
 
 	"github.com/chikamim/nilsimsa"
 	"github.com/chromedp/cdproto/inspector"
@@ -292,7 +293,11 @@ func (chrome *Chrome) Screenshot(url *url.URL) (result *ScreenshotResult, err er
 	options = append(options, chromedp.UserAgent(chrome.UserAgent))
 	options = append(options, chromedp.DisableGPU)
 	options = append(options, chromedp.Flag("ignore-certificate-errors", true)) // RIP shittyproxy.go
-	options = append(options, chromedp.WindowSize(chrome.ResolutionX, chrome.ResolutionY))
+        options = append(options, chromedp.WindowSize(chrome.ResolutionX, chrome.ResolutionY))
+
+        if os.Geteuid() == 0 {
+                options = append(options, chromedp.Flag("no-sandbox", true))
+        }
 
 	if chrome.ChromePath != "" {
 		options = append(options, chromedp.ExecPath(chrome.ChromePath))

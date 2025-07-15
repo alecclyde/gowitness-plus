@@ -69,3 +69,13 @@ go build ./...
 
 The frontend files are ignored from version control, so running the above steps
 before `go build` ensures `web/dist` exists for Go's embed directives.
+
+## Running as root
+
+Chrome refuses to start as the `root` user unless the `--no-sandbox` flag is
+provided. `gowitness` automatically sets this flag when running with UID 0. If
+Chrome still fails to launch, run the tool as a normal user instead.
+
+When not running as root, ensure the screenshot and database paths are writable.
+The program now attempts a small write in the screenshot directory during
+startup and will error if permissions are insufficient.
